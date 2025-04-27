@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo List App</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+    .todo-form { display: flex; margin-bottom: 1rem; }
+    .todo-form input[type="text"] { flex: 1; padding: 0.5rem; }
+    .todo-form button { padding: 0.5rem 1rem; margin-left: 0.5rem; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.5rem; background: #f5f5f5; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+    li.completed { text-decoration: line-through; color: #888; }
+    .delete-btn { background: none; border: none; color: #c00; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+  <form class="todo-form">
+    <input type="text" id="todo-input" placeholder="Add a new task" required/>
+    <button type="submit">Add</button>
+  </form>
+  <ul id="todo-list"></ul>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('.todo-form');
+      const input = document.getElementById('todo-input');
+      const list = document.getElementById('todo-list');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        const li = document.createElement('li');
+        li.textContent = text;
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.addEventListener('click', () => list.removeChild(li));
+        li.addEventListener('click', () => li.classList.toggle('completed'));
+        li.appendChild(deleteBtn);
+        list.appendChild(li);
+        input.value = '';
+        input.focus();
+      });
+    });
+  </script>
+</body>
+</html>
